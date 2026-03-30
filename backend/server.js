@@ -6,44 +6,57 @@ require("dotenv").config();
 
 const app = express();
 
+// Middleware
 app.use(express.json());
 
+// CORS setup
 const allowedOrigins = [
-  "http://localhost:3000",
-  "https://portfolio-web-silk-nu.vercel.app/"
+  "http://localhost:3000",                    // local dev
+  "https://portfolio-web-silk-nu.vercel.app" // Vercel frontend
 ];
 
 app.use(cors({
-  origin: function (origin, callback) {
-    // allow requests with no origin (like mobile apps or curl)
+  origin: function(origin, callback) {
+    // allow requests with no origin (like Postman, curl)
     if (!origin) return callback(null, true);
-    if (allowedOrigins.indexOf(origin) === -1) {
-      var msg = `The CORS policy for this site does not allow access from the specified Origin.`;
-      return callback(new Error(msg), false);
+    if (!allowedOrigins.includes(origin)) {
+      return callback(new Error("CORS policy does not allow this origin."), false);
     }
     return callback(null, true);
   },
-  credentials: true
+  credentials: true, // allow cookies
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], // allow all methods
+  allowedHeaders: ["Content-Type", "Authorization"] // allow headers
 }));
-// Test API
+
+// Handle preflight requests
+app.options("/", cors());
+
+// Test root route
 app.get("/", (req, res) => {
   res.send("Backend API is running!");
 });
 
-//  SESSION CONFIG (NO JWT)
+// Session configuration
 app.use(session({
-  secret: "mysessionsecret", // any random string
+  secret: "mysessionsecret",
   resave: false,
   saveUninitialized: false,
   cookie: {
-    secure: false
+    secure: false,  // true if using HTTPS
+    httpOnly: true,
+    maxAge: 1000 * 60 * 60 // 1 hour
   }
 }));
 
+// Connect to MongoDB
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log("MongoDB Connected"))
   .catch(err => console.log(err));
 
+// Routes
 app.use("/api/auth", require("./routes/authRoutes"));
 
-app.listen(5000, () => console.log("Server running on 5000"));
+// Start server using Render port
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
