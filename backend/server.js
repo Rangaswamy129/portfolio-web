@@ -10,7 +10,7 @@ app.use(express.json());
 
 const allowedOrigins = [
   "http://localhost:3000",
-  "https://your-frontend.onrender.com"
+  "https://portfolio-web-silk-nu.vercel.app/"
 ];
 
 app.use(cors({
