@@ -12,7 +12,7 @@ app.use(express.json());
 // CORS setup
 const allowedOrigins = [
   "http://localhost:3000",                    // local dev
-  "https://portfolio-web-silk-nu.vercel.app" // Vercel frontend
+  "https://portfolio-web-silk-nu.vercel.app/" // Vercel frontend
 ];
 
 app.use(cors({
