@@ -10,6 +10,7 @@ frontend\node_modules
 /coverage
 
 # production
+node_modules
 /build
 build/
 dist/
@@ -31,3 +32,4 @@ backend\node_modules
 frontend\.env
 
 backend\.env
+backend\node_modules
