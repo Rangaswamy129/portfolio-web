@@ -25,12 +25,17 @@ app.use(cors({
     return callback(null, true);
   },
   credentials: true, // allow cookies
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], // allow all methods
-  allowedHeaders: ["Content-Type", "Authorization"] // allow headers
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"]
 }));
 
-// Handle preflight requests
-app.options("/", cors());
+// Handle preflight requests for all routes
+app.options("*", cors({
+  origin: allowedOrigins,
+  credentials: true,
+  methods: ["GET","POST","PUT","DELETE","OPTIONS"],
+  allowedHeaders: ["Content-Type","Authorization"]
+}));
 
 // Test root route
 app.get("/", (req, res) => {
@@ -43,8 +48,9 @@ app.use(session({
   resave: false,
   saveUninitialized: false,
   cookie: {
-    secure: false,  // true if using HTTPS
+    secure: true,      // HTTPS only
     httpOnly: true,
+    sameSite: "none",  // allow cross-origin cookies
     maxAge: 1000 * 60 * 60 // 1 hour
   }
 }));
