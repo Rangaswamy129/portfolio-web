@@ -25,6 +25,10 @@ app.use(cors({
   },
   credentials: true
 }));
+// Test API
+app.get("/", (req, res) => {
+  res.send("Backend API is running!");
+});
 
 //  SESSION CONFIG (NO JWT)
 app.use(session({
