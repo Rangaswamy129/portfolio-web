@@ -1,6 +1,6 @@
 import { Navigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import API from "../api"; // make sure API has withCredentials: true
+import API from "../api";
 
 function ProtectedRoute({ children }) {
   const [auth, setAuth] = useState({ loading: true, isAuthenticated: false });
@@ -8,7 +8,6 @@ function ProtectedRoute({ children }) {
   useEffect(() => {
     API.get("/auth/me")
       .then((res) => {
-        // If backend returns user data, set authenticated
         if (res.data && res.data.user) {
           setAuth({ loading: false, isAuthenticated: true });
         } else {
@@ -20,8 +19,7 @@ function ProtectedRoute({ children }) {
       });
   }, []);
 
-  if (auth.loading) return <p>Loading...</p>; // optional loading state
-
+  if (auth.loading) return <p>Loading...</p>;
   if (!auth.isAuthenticated) return <Navigate to="/login" />;
 
   return children;
