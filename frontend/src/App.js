@@ -6,12 +6,10 @@ import Home from './pages/Home';
 import About from './pages/About';
 import Projects from './pages/Projects';
 import Contact from './pages/Contact';
-import Login from './pages/Login';
-import Register from './pages/Register';
 import CursorGlow from "./components/CursorGlow";
 import Cursor from "./components/Cursor";
 import Footer from "./components/Footer";
-import ProtectedRoute from "./components/ProtectedRoute";
+
 
 // Scroll to top on route change
 const ScrollToTop = () => {
@@ -28,61 +26,29 @@ function App() {
       <div className="min-h-screen bg-slate-50 dark:bg-[#0f172a] text-slate-900 dark:text-slate-100 selection:bg-blue-500/30">
         <Router>
           <ScrollToTop />
-         
-
-          <CursorGlow />
-          <Cursor />
-
+          <Navbar darkMode={darkMode} setDarkMode={setDarkMode} />
+           
+      <CursorGlow />
+      {/* your routes/components */}
+       <Cursor />
+      {/* your routes */}
+       
+    
           <main className="max-w-7xl mx-auto px-6">
             <AnimatePresence mode="wait">
               <Routes>
-
-                {/* PUBLIC ROUTES */}
-                <Route path="/login" element={<Login />} />
-                <Route path="/register" element={<Register />} />
-
-                {/* PROTECTED ROUTES */}
-                <Route path="/" element={
-                  <ProtectedRoute>
-                     <Navbar darkMode={darkMode} setDarkMode={setDarkMode} />
-                    <Home />
-                      <Footer />
-                  </ProtectedRoute>
-                } />
-
-                <Route path="/about" element={
-                  <ProtectedRoute>
-                     <Navbar darkMode={darkMode} setDarkMode={setDarkMode} />
-                    <About />
-                      <Footer />
-                  </ProtectedRoute>
-                } />
-
-                <Route path="/projects" element={
-                  <ProtectedRoute>
-                     <Navbar darkMode={darkMode} setDarkMode={setDarkMode} />
-                    <Projects />
-                      <Footer />
-                  </ProtectedRoute>
-                } />
-
-                <Route path="/contact" element={
-                  <ProtectedRoute>
-                     <Navbar darkMode={darkMode} setDarkMode={setDarkMode} />
-                    <Contact />
-                     <Footer />
-                  </ProtectedRoute>
-                } />
-
+                <Route path="/" element={<Home />} />
+                <Route path="/about" element={<About />} />
+                <Route path="/projects" element={<Projects />} />
+                <Route path="/contact" element={<Contact />} />
               </Routes>
             </AnimatePresence>
           </main>
         </Router>
       </div>
-
-    
+        <Footer />
     </div>
   );
 }
 
-export default App;
+export default App;  
