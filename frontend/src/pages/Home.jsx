@@ -2,7 +2,7 @@ import React from 'react';
 import { FaGithub, FaLinkedin } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import Typing from '../components/Typing';
-import profile from "../assets/profile.jpg";
+import profile from "../assets/profile.png";
 import useScrollReveal from "../hooks/useScrollReveal";
 
 const Home = () => {
